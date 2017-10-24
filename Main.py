@@ -1,4 +1,5 @@
-import pygame, time
+import pygame, time, glob, random
+from random import randrange, sample
 
 musicstyle = 0
 
@@ -45,24 +46,43 @@ def fadeTo(newsong):
 		channela.set_volume(1)
 		currentmusicchannel = "a"
 		
-sfx1 = pygame.mixer.Sound("./sfx/pew1.wav")
-sfx2 = pygame.mixer.Sound("./sfx/pew1.wav")
-sfx3 = pygame.mixer.Sound("./sfx/pew1.wav")
-sfx4 = pygame.mixer.Sound("./sfx/pew1.wav")
+def getRandomPlaylistOf(directory):
+	finaldir = "./" + directory + "/*"
+	playlist = []
+	for result in glob.iglob(finaldir):
+		playlist.insert(randrange(len(playlist)+1), result)
+	return playlist
 
-#pygame.mixer.music.load("./bgm/mukke1.mp3")
-#muchannela = pygame.mixer.music.play()
+def getPlayableList(directory):
+	playlist = []
+	for item in directory:
+		playlist.append(pygame.mixer.Sound(item))		
+	return playlist
+		
+#sfx1 = pygame.mixer.Sound("./sfx/pew1.wav")
+#sfx2 = pygame.mixer.Sound("./sfx/pew1.wav")
+#sfx3 = pygame.mixer.Sound("./sfx/pew1.wav")
+#sfx4 = pygame.mixer.Sound("./sfx/pew1.wav")
 
-channela = pygame.mixer.Sound("./bgm/sonata.wav").play()
-channela.set_volume(1)
-#channela.stop()
-channelb = pygame.mixer.Sound("./bgm/lullaby.wav").play()
-channelb.set_volume(0)
-channelb.stop()
-channelc = sfx3.play()
-channelc.stop()
-channeld = sfx4.play()
-channeld.stop()
+##pygame.mixer.music.load("./bgm/mukke1.mp3")
+##muchannela = pygame.mixer.music.play()
+
+#channela = pygame.mixer.Sound("./bgm/sonata.wav").play()
+#channela.set_volume(1)
+##channela.stop()
+#channelb = pygame.mixer.Sound("./bgm/lullaby.wav").play()
+#channelb.set_volume(0)
+#channelb.stop()
+#channelc = sfx3.play()
+#channelc.stop()
+#channeld = sfx4.play()
+#channeld.stop()
+
+alist = getPlayableList(getRandomPlaylistOf("sfx"))
+print(alist)
+
+(random.choice(alist)).play()
+
 while True:
 	if musicstyle == 0:
 		for event in pygame.event.get():
