@@ -1,61 +1,22 @@
-import pygame, time, glob, random
+import pygame, time, glob, random, os
 from random import randrange, sample
-from threading import Timer
+from collections import defaultdict
 
-currentMusicStyle = 0
-musicStyleDict = {'1':'mysterium','2':'jarhead','3':'symphony'}
+currentMusicStyle = "0"
+musicStyleDict = {"1":"mysterium","2":"jarhead","3":"symphony"}
+maxMusicVolume = 0.5
 
-standardSfxPath = "./sfx/pew1.wav"
+#standardSfxPath = "./sfx/pew1.wav"
 
 pygame.init()
+pygame.display.set_caption('super-mc-audiomix')
 pygame.mixer.init()
 SCREEN = pygame.display.set_mode((1, 1))
-CurrentMusicChannel = "a"
-MusicChannelA = pygame.mixer.Sound("./sound/silence-1-second.wav").play()
-MusicChannelB = pygame.mixer.Sound("./sound/silence-1-second.wav").play()
+currentMusicChannel = "a"
+musicChannelA = pygame.mixer.Sound("./sound/silence-1-second.wav").play()
+musicChannelB = pygame.mixer.Sound("./sound/silence-1-second.wav").play()
 currentPlaylist = []
-
-#sfx_q = pygame.mixer.Sound(standardSfxPath)
-#sfx_w = pygame.mixer.Sound(standardSfxPath)
-#sfx_e = pygame.mixer.Sound(standardSfxPath)
-#sfx_r = pygame.mixer.Sound(standardSfxPath)
-#sfx_t = pygame.mixer.Sound(standardSfxPath)
-#sfx_z = pygame.mixer.Sound(standardSfxPath)
-#sfx_u = pygame.mixer.Sound(standardSfxPath)
-#sfx_i = pygame.mixer.Sound(standardSfxPath)
-#sfx_o = pygame.mixer.Sound(standardSfxPath)
-#sfx_p = pygame.mixer.Sound(standardSfxPath)
-#sfx_a = pygame.mixer.Sound(standardSfxPath)
-#sfx_s = pygame.mixer.Sound(standardSfxPath)
-#sfx_d = pygame.mixer.Sound(standardSfxPath)
-#sfx_f = pygame.mixer.Sound(standardSfxPath)
-#sfx_g = pygame.mixer.Sound(standardSfxPath)
-#sfx_h = pygame.mixer.Sound(standardSfxPath)
-#sfx_j = pygame.mixer.Sound(standardSfxPath)
-#sfx_k = pygame.mixer.Sound(standardSfxPath)
-#sfx_l = pygame.mixer.Sound(standardSfxPath)
-
-sfxDict = {'1':pygame.mixer.Sound("./sound/jarhead/sfx/rewind.wav"),
-		  '2':pygame.mixer.Sound(standardSfxPath),
-		  '3':pygame.mixer.Sound(standardSfxPath),
-		  '4':pygame.mixer.Sound(standardSfxPath),
-		  '5':pygame.mixer.Sound(standardSfxPath),
-		  '6':pygame.mixer.Sound(standardSfxPath),
-		  '7':pygame.mixer.Sound(standardSfxPath),
-		  '8':pygame.mixer.Sound(standardSfxPath),
-		  '9':pygame.mixer.Sound(standardSfxPath),
-		  '10':pygame.mixer.Sound(standardSfxPath),
-		  '11':pygame.mixer.Sound(standardSfxPath),
-		  '12':pygame.mixer.Sound(standardSfxPath),
-		  '13':pygame.mixer.Sound(standardSfxPath),
-		  '14':pygame.mixer.Sound(standardSfxPath),
-		  '15':pygame.mixer.Sound(standardSfxPath),
-		  '16':pygame.mixer.Sound(standardSfxPath),
-		  '17':pygame.mixer.Sound(standardSfxPath),
-		  '18':pygame.mixer.Sound(standardSfxPath),
-		  '19':pygame.mixer.Sound(standardSfxPath)}
-
-#sfxDict = {'1':sfx_q,'2':sfx_w,'3':sfx_e,'4':sfx_r,'5':sfx_t,'6':sfx_z,'7':sfx_u,'8':sfx_i,'9':sfx_o,'10':sfx_p,'11':sfx_a,'12':sfx_s,'13':sfx_d,'14':sfx_f,'15':sfx_g,'16':sfx_h,'17':sfx_j,'18':sfx_k,'19':sfx_l}
+sfxDict = defaultdict(list)
 
 def getRandomPlaylistOf(directory):
 	finaldir = "./sound/" + directory + "/bgm/*"
@@ -72,132 +33,181 @@ def getNextSongFromPlaylist():
 
 def fadeTo(newDirection):
 	global currentPlaylist
-	global CurrentMusicChannel
-	global MusicChannelA
-	global MusicChannelB
+	global currentMusicChannel
+	global musicChannelA
+	global musicChannelB
+	global currentMusicStyle
+	
+	print("getting all the stuff")
 	
 	loadSoundEffects(musicStyleDict[newDirection])
 	currentPlaylist = getRandomPlaylistOf(musicStyleDict[newDirection])
 	
-	if CurrentMusicChannel == "a":
-		CurrentMusicChannel = "b"
+	print("here we fade...")
+	
+	if currentMusicChannel == "a":
+		currentMusicChannel = "b"
 		print "Switching to B channel"
-		vola = 1
+		vola = maxMusicVolume
 		volb = 0
-		MusicChannelB = pygame.mixer.Sound(getNextSongFromPlaylist()).play()
+		musicChannelB = pygame.mixer.Sound(getNextSongFromPlaylist()).play()
+		musicChannelB.pause()
 		checkTheQueue()
+		musicChannelB.unpause()
 		while vola > 0:
 			print(vola)
 			vola -= 0.01
 			volb += 0.01
-			MusicChannelA.set_volume(vola)
-			MusicChannelB.set_volume(volb)
-			time.sleep(0.05)
-		MusicChannelB.set_volume(1)
+			musicChannelA.set_volume(vola)
+			musicChannelB.set_volume(volb)
+			time.sleep(0.03)
+		musicChannelB.set_volume(maxMusicVolume)
 	else:
-		CurrentMusicChannel = "a"
+		currentMusicChannel = "a"
 		print "Switching to A channel"
-		volb = 1
+		volb = maxMusicVolume
 		vola = 0
-		MusicChannelA = pygame.mixer.Sound(getNextSongFromPlaylist()).play()
+		musicChannelA = pygame.mixer.Sound(getNextSongFromPlaylist()).play()
+		musicChannelA.pause()
 		checkTheQueue()
+		musicChannelA.unpause()
 		while volb > 0:
 			print(volb)
 			volb -= 0.01
 			vola += 0.01
-			MusicChannelB.set_volume(volb)
-			MusicChannelA.set_volume(vola)
+			musicChannelB.set_volume(volb)
+			musicChannelA.set_volume(vola)
 			time.sleep(0.05)
-		MusicChannelA.set_volume(1)
+		musicChannelA.set_volume(maxMusicVolume)
 	currentMusicStyle = newDirection
 
 def loadSoundEffects(directory):
 	global sfxDict
-	finaldir = "./sound/" + directory + "/sfx/*"
-	counter = 1
-	for result in sorted(glob.iglob(finaldir)):
-		sfxDict[str(counter)] = pygame.mixer.Sound(result)
-		counter += 1
+	print("loading sfx for ")
+	print(directory)
+	sfxDict = defaultdict(list)
+	finaldir = "./sound/" + directory + "/sfx/"
+#	counter = 1
+#	for result in sorted(glob.iglob(finaldir)):
+#		sfxDict[str(counter)] = pygame.mixer.Sound(result)
+#		counter += 1
+	for item in glob.iglob(finaldir + "*"):
+		item = item.replace(finaldir, "")
+		print(item)
+		sfxDict[item[0]].append(item)
 
 def checkTheQueue():
 	global currentPlaylist
 	global currentMusicStyle
-	if CurrentMusicChannel == "a":
-		if MusicChannelA.get_queue() is None:
+	if currentMusicChannel == "a":
+		if musicChannelA.get_queue() is None:
 			print("queue empty!")
 			if len(currentPlaylist) == 0:
 				print("playlist was empty, makin a new one")
 				currentPlaylist = getRandomPlaylistOf(musicStyleDict[currentMusicStyle])
-			MusicChannelA.queue(pygame.mixer.Sound(currentPlaylist[0]))
+			musicChannelA.queue(pygame.mixer.Sound(currentPlaylist[0]))
 			currentPlaylist.remove(currentPlaylist[0])
 			print("done!")
 	else:
-		if MusicChannelB.get_queue() is None:
+		if musicChannelB.get_queue() is None:
 			print("queue empty!")
 			if len(currentPlaylist) == 0:
 				print("playlist was empty, makin a new one")
 				currentPlaylist = getRandomPlaylistOf(musicStyleDict[currentMusicStyle])
-			MusicChannelB.queue(pygame.mixer.Sound(currentPlaylist[0]))
+			musicChannelB.queue(pygame.mixer.Sound(currentPlaylist[0]))
 			currentPlaylist.remove(currentPlaylist[0])
 			print("done!")
 
+def playByKey(key):
+	global sfxDict
+	global musicStyleDict
+	global currentMusicStyle
+	if currentMusicStyle != "0":
+		if key in sfxDict:
+			sfxToPlay = "./sound/" + musicStyleDict[currentMusicStyle] + "/sfx/" + random.choice(sfxDict[key])
+			print("I'll play...")
+			print(sfxToPlay)
+			pygame.mixer.Sound(sfxToPlay).play()
+		else:
+			print("I have nothing for this key...")
+			print(key)
+	else:
+		print("No soundeffects before you switch to some music!")
+		
+def turnMusicUp():
+	global maxMusicVolume
+	global currentMusicChannel
+	global musicChannelA
+	global musicChannelB
+	if maxMusicVolume < 0.99:
+		vol = maxMusicVolume
+		maxMusicVolume += 0.1		
+		if currentMusicChannel == "a":
+			while vol < maxMusicVolume:
+				print(vol)
+				vol += 0.01
+				musicChannelA.set_volume(vol)
+				time.sleep(0.03)
+		else:
+			while vol < maxMusicVolume:
+				print(vol)
+				vol += 0.01
+				musicChannelB.set_volume(vol)
+				time.sleep(0.03)
+		print("setting to" + str(maxMusicVolume))
+		musicChannelA.set_volume(maxMusicVolume)
+	else:
+		print("Volume is already at 100%!")
+		
+def turnMusicDown():
+	global maxMusicVolume
+	global currentMusicChannel
+	global musicChannelA
+	global musicChannelB
+	if maxMusicVolume > 0.01:
+		vol = maxMusicVolume
+		maxMusicVolume -= 0.1		
+		if currentMusicChannel == "a":
+			while vol > maxMusicVolume:
+				print(vol)
+				vol -= 0.01
+				musicChannelA.set_volume(vol)
+				time.sleep(0.03)
+		else:
+			while vol > maxMusicVolume:
+				print(vol)
+				vol -= 0.01
+				musicChannelB.set_volume(vol)
+				time.sleep(0.03)
+		musicChannelA.set_volume(maxMusicVolume)
+	else:
+		print("Volume is already at 0%!")
+
 while True:
-	if currentMusicStyle == 0:
-		for event in pygame.event.get():
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_1:
-					fadeTo("1")
-				if event.key == pygame.K_2:
-					fadeTo("2")
-				if event.key == pygame.K_3:
-					fadeTo("3")
-				if event.key == pygame.K_q:
-					sfxDict['1'].play()
-				if event.key == pygame.K_w:
-					sfxDict['2'].play()
-				if event.key == pygame.K_e:
-					sfxDict['3'].play()
-				if event.key == pygame.K_r:
-					sfxDict['4'].play()
-				if event.key == pygame.K_t:
-					sfxDict['5'].play()
-				if event.key == pygame.K_z:
-					sfxDict['6'].play()
-				if event.key == pygame.K_u:
-					sfxDict['7'].play()
-				if event.key == pygame.K_i:
-					sfxDict['8'].play()
-				if event.key == pygame.K_o:
-					sfxDict['9'].play()
-				if event.key == pygame.K_p:
-					sfxDict['10'].play()
-				if event.key == pygame.K_a:
-					sfxDict['11'].play()
-				if event.key == pygame.K_s:
-					sfxDict['12'].play()
-				if event.key == pygame.K_d:
-					sfxDict['13'].play()
-				if event.key == pygame.K_f:
-					sfxDict['14'].play()
-				if event.key == pygame.K_g:
-					sfxDict['15'].play()
-				if event.key == pygame.K_h:
-					sfxDict['16'].play()
-				if event.key == pygame.K_j:
-					sfxDict['17'].play()
-				if event.key == pygame.K_k:
-					sfxDict['18'].play()
-				if event.key == pygame.K_l:
-					sfxDict['19'].play()
-				if event.key == pygame.K_ESCAPE:
-					breaker = True
-					while breaker:
-						print("Really quit?")
-						for event in pygame.event.get():
-							if event.type == pygame.KEYDOWN:
-								if event.key == pygame.K_RETURN:
-									pygame.quit()
-								else:
-									print("I'll break, then")
-									breaker = False
-									break
+	os.system("wmctrl -a super-mc-audiomix")
+	for event in pygame.event.get():
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_1:
+				fadeTo("1")
+			elif event.key == pygame.K_2:
+				fadeTo("2")
+			elif event.key == pygame.K_3:
+				fadeTo("3")
+			elif event.key == pygame.K_MINUS:
+				turnMusicDown()
+			elif event.key == pygame.K_PLUS:
+				turnMusicUp()
+			elif event.key == pygame.K_ESCAPE:
+				breaker = True
+				print("Really quit? Enter to quit!")
+				while breaker:
+					for event in pygame.event.get():
+						if event.type == pygame.KEYDOWN:
+							if event.key == pygame.K_RETURN:
+								pygame.quit()
+							else:
+								print("I'll break, then")
+								breaker = False
+								break
+			else:
+				playByKey(pygame.key.name(event.key))
