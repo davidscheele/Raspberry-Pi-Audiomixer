@@ -1,0 +1,9 @@
+#put the foldernames of the styles you want to use in this file. first name will be assigned to 1, second to 2 and so on. so for example if you'd put
+#jarhead
+#symphony
+#mysterium
+#in here, you would have jarhead bgm and soundeffects on number 1, symphony bgm and sfx on the 2 and mysterium stuff on the 3
+mysterium
+symphony
+jarhead
+mysterium

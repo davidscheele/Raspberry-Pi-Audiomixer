@@ -3,18 +3,31 @@ from random import randrange, sample
 from collections import defaultdict
 
 currentMusicStyle = "0"
-musicStyleDict = {"1":"mysterium","2":"jarhead","3":"symphony"}
+
+def loadMusicStyles():	
+	with open('./musicstyleorder') as file:
+		musicStyleDict = {}
+		counter = 1
+		for line in file:
+			if line[0] != "#":
+				line = line.replace("\n", "")
+				musicStyleDict[str(counter)] = line
+				counter += 1
+	print(musicStyleDict)
+	return musicStyleDict
+
+musicStyleDict = loadMusicStyles()
 maxMusicVolume = 0.5
 
-#standardSfxPath = "./sfx/pew1.wav"
+warnSound = "./warning.ogg"
 
 pygame.init()
 pygame.display.set_caption('super-mc-audiomix')
 pygame.mixer.init()
 SCREEN = pygame.display.set_mode((1, 1))
 currentMusicChannel = "a"
-musicChannelA = pygame.mixer.Sound("./sound/silence-1-second.wav").play()
-musicChannelB = pygame.mixer.Sound("./sound/silence-1-second.wav").play()
+musicChannelA = pygame.mixer.Sound("./silence-1-second.wav").play()
+musicChannelB = pygame.mixer.Sound("./silence-1-second.wav").play()
 currentPlaylist = []
 sfxDict = defaultdict(list)
 
@@ -87,10 +100,6 @@ def loadSoundEffects(directory):
 	print(directory)
 	sfxDict = defaultdict(list)
 	finaldir = "./sound/" + directory + "/sfx/"
-#	counter = 1
-#	for result in sorted(glob.iglob(finaldir)):
-#		sfxDict[str(counter)] = pygame.mixer.Sound(result)
-#		counter += 1
 	for item in glob.iglob(finaldir + "*"):
 		item = item.replace(finaldir, "")
 		print(item)
@@ -129,9 +138,11 @@ def playByKey(key):
 			print(sfxToPlay)
 			pygame.mixer.Sound(sfxToPlay).play()
 		else:
+			pygame.mixer.Sound(warnSound).play()
 			print("I have nothing for this key...")
 			print(key)
 	else:
+		pygame.mixer.Sound(warnSound).play()
 		print("No soundeffects before you switch to some music!")
 		
 def turnMusicUp():
@@ -187,12 +198,8 @@ while True:
 	os.system("wmctrl -a super-mc-audiomix")
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_1:
-				fadeTo("1")
-			elif event.key == pygame.K_2:
-				fadeTo("2")
-			elif event.key == pygame.K_3:
-				fadeTo("3")
+			if pygame.key.name(event.key) in musicStyleDict:
+				fadeTo(pygame.key.name(event.key))
 			elif event.key == pygame.K_MINUS:
 				turnMusicDown()
 			elif event.key == pygame.K_PLUS:
