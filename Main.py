@@ -24,7 +24,9 @@ warnSound = "./warning.ogg"
 pygame.init()
 pygame.display.set_caption('super-mc-audiomix')
 pygame.mixer.init()
-SCREEN = pygame.display.set_mode((1, 1))
+os.putenv('SDL_VIDEODRIVER', 'fbcon')
+pygame.display.init()
+#SCREEN = pygame.display.set_mode((1, 1))
 currentMusicChannel = "a"
 musicChannelA = pygame.mixer.Sound("./silence-1-second.wav").play()
 musicChannelB = pygame.mixer.Sound("./silence-1-second.wav").play()
