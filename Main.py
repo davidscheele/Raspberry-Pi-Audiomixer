@@ -199,7 +199,7 @@ def turnMusicDown():
 		print("Volume is already at 0%!")
 
 while True:
-	os.system("wmctrl -a super-mc-audiomix")
+#	os.system("wmctrl -a super-mc-audiomix")
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
 			if pygame.key.name(event.key) in musicStyleDict:
