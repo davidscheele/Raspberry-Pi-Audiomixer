@@ -2,6 +2,8 @@ import pygame, time, glob, random, os
 from random import randrange, sample
 from collections import defaultdict
 
+os.environ["SDL_VIDEODRIVER"] = "dummy" # or maybe 'fbcon'
+
 currentMusicStyle = "0"
 
 def loadMusicStyles():	
@@ -24,9 +26,9 @@ warnSound = "./warning.ogg"
 pygame.init()
 pygame.display.set_caption('super-mc-audiomix')
 pygame.mixer.init()
-os.putenv('SDL_VIDEODRIVER', 'fbcon')
+#os.putenv('SDL_VIDEODRIVER', 'fbcon')
 pygame.display.init()
-#SCREEN = pygame.display.set_mode((1, 1))
+SCREEN = pygame.display.set_mode((1, 1))
 currentMusicChannel = "a"
 musicChannelA = pygame.mixer.Sound("./silence-1-second.wav").play()
 musicChannelB = pygame.mixer.Sound("./silence-1-second.wav").play()
