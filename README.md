@@ -6,6 +6,7 @@ You will need to have installed:
 wmctrl (this will be used to always shift the pygame window into the foreground)
 python 2.7.6 (Well, duh)
 pygame (This won't run otherwise)
+python keyboard module (https://pypi.org/project/keyboard/ I had version 0.13.1 when coding this)
 
 Nice to have:
-dir2ogg (Is nice to oggify whole directories. PLEASE ONLY USE OGG FILES FOR MUSIC AND SOUNDEFFECTS!!)
+dir2ogg (Is nice to oggify whole directories. ONLY USE OGG FILES FOR MUSIC AND SOUNDEFFECTS!!)
