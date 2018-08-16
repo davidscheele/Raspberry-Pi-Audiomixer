@@ -27,7 +27,8 @@ def loadMusicStyles():
 musicStyleDict = loadMusicStyles()
 maxMusicVolume = 0.5
 
-warnSound = home+"/Raspberry-Pi-Audiomixer/warning.ogg"
+warnSound = home+"/Raspberry-Pi-Audiomixer/warning.wav"
+secondSilence = home+"/Raspberry-Pi-Audiomixer/silence-1-second.wav"
 
 logging.info('Preinit of mixer')
 pygame.mixer.pre_init(22050, -16, 2, 512)
@@ -35,15 +36,16 @@ logging.info('Init Mixer')
 pygame.mixer.init()
 currentMusicChannel = "x"
 logging.info('Prepping Channel A')
-musicChannelA = pygame.mixer.Sound(home+"/Raspberry-Pi-Audiomixer/silence-1-second.wav").play()
+musicChannelA = pygame.mixer.Sound(secondSilence).play()
 logging.info('Prepping Channel B')
-musicChannelB = pygame.mixer.Sound(home+"/Raspberry-Pi-Audiomixer/silence-1-second.wav").play()
+musicChannelB = pygame.mixer.Sound(secondSilence).play()
 currentPlaylist = []
 sfxDict = defaultdict(list)
 
 def getRandomPlaylistOf(directory):
 	logging.info('Getting a Radom Playlist')
 	finaldir = home+"/Raspberry-Pi-Audiomixer/sound/" + directory + "/bgm/*"
+	logging.info(finaldir)
 	playlist = []
 	for result in glob.iglob(finaldir):
 		playlist.insert(randrange(len(playlist)+1), result)
@@ -131,7 +133,7 @@ def loadSoundEffects(directory):
 	global sfxDict
 
 	sfxDict = defaultdict(list)
-	finaldir = home+"Raspberry-Pi-Audiomixer/sound/" + directory + "/sfx/"
+	finaldir = home+"/Raspberry-Pi-Audiomixer/sound/" + directory + "/sfx/"
 	for item in glob.iglob(finaldir + "*"):
 		item = item.replace(finaldir, "")
 		sfxDict[item[0]].append(item)
@@ -235,7 +237,7 @@ def turnMusicDown():
 		logging.info('Volume is already at 100%')
 
 logging.info('Startup Sound')
-pygame.mixer.Sound(home+'/Raspberry-Pi-Audiomixer/startup-sound.ogg').play()
+pygame.mixer.Sound(home+'/Raspberry-Pi-Audiomixer/startup-sound.wav').play()
 logging.info('Entering while loop')
 while breaker:
 	checkTheQueue()

@@ -9,13 +9,13 @@ pygame (This won't run otherwise)
 python keyboard module (https://pypi.org/project/keyboard/ I had version 0.13.1 when coding this)
 
 Nice to have:
-dir2ogg (Is nice to oggify whole directories. ONLY USE OGG FILES FOR MUSIC AND SOUNDEFFECTS!!)
+ffmpeg or avconv (useful to wav any music and soundeffect you have. USE ONLY WAV FILES FOR SOUNDEFFECTS AND MUSIC!! If your Music or soundeffects don't play and only a faint crack is hearable, then you haven't converted them to wav correctly. usea different program!!"
 
 
 Setup:
 - Create Directories in the sound folder, create subdirectories in those named "bgm" (backgroundmusic) and "sfx" (soundeffects)
-- Put music in ogg format into the bgm folder, naming does not really matter. 
-- Put sound effects in ogg format into the sfx folder. Important: put a numeral in the front of the filename to map them to numeral keys (eg. "3_boing.ogg" will map to the button 3 when the specific music style is loaded). You can map multiple soundeffects to a single numeral button, a random one will be played after hitting the key.
+- Put music in wav format into the bgm folder, naming does not really matter. 
+- Put sound effects in wav format into the sfx folder. Important: put a numeral in the front of the filename to map them to numeral keys (eg. "3_boing.wav" will map to the button 3 when the specific music style is loaded). You can map multiple soundeffects to a single numeral button, a random one will be played after hitting the key.
 - Edit the musicstyleorder in the main directory and change according to the instructions inside
 
 IMPORTANT:
