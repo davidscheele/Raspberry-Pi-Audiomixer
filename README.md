@@ -28,4 +28,4 @@ Press space followed by the number of music style you want to switch to, determi
 Script should switch to the music style and play a random piece of music.
 Now press numeral buttons to which you mapped soundeffects. A random one will play if you mapped more than one to a single numeral.
 
-Hit Enter twice to abort script.
+Hit Enter twice to abort script. 
