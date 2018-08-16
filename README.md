@@ -10,3 +10,13 @@ python keyboard module (https://pypi.org/project/keyboard/ I had version 0.13.1 
 
 Nice to have:
 dir2ogg (Is nice to oggify whole directories. ONLY USE OGG FILES FOR MUSIC AND SOUNDEFFECTS!!)
+
+
+Setup:
+- Create Directories in the sound folder, create subdirectories in those named "bgm" (backgroundmusic) and "sfx" (soundeffects)
+- Put music in ogg format into the bgm folder, put sound effects in ogg format into the sfx folder
+- Edit the musicstyleorder in the main directory and change according to the instructions inside
+
+IMPORTANT:
+The Script expects to be run as superuser and the main directory should be located in some users home dir.
+Change the user on line 5 in the Main.py to that user, then run 'sudo python Main.py'
