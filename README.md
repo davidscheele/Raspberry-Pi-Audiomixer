@@ -14,9 +14,18 @@ dir2ogg (Is nice to oggify whole directories. ONLY USE OGG FILES FOR MUSIC AND S
 
 Setup:
 - Create Directories in the sound folder, create subdirectories in those named "bgm" (backgroundmusic) and "sfx" (soundeffects)
-- Put music in ogg format into the bgm folder, put sound effects in ogg format into the sfx folder
+- Put music in ogg format into the bgm folder, naming does not really matter. 
+- Put sound effects in ogg format into the sfx folder. Important: put a numeral in the front of the filename to map them to numeral keys (eg. "3_boing.ogg" will map to the button 3 when the specific music style is loaded). You can map multiple soundeffects to a single numeral button, a random one will be played after hitting the key.
 - Edit the musicstyleorder in the main directory and change according to the instructions inside
 
 IMPORTANT:
 The Script expects to be run as superuser and the main directory should be located in some users home dir.
 Change the user on line 5 in the Main.py to that user, then run 'sudo python Main.py'
+
+Useage:
+After Startup you will hear a startup sound. Afterwards try pressing numeral buttons (1-0). An error sound should play, because no music style has been loaded yet.
+Press space followed by the number of music style you want to switch to, determined in the musicstyleorder file.
+Script should switch to the music style and play a random piece of music.
+Now press numeral buttons to which you mapped soundeffects. A random one will play if you mapped more than one to a single numeral.
+
+Hit Enter twice to abort script.
