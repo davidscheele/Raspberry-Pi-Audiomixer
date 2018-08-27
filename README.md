@@ -36,3 +36,7 @@ Alternatively put it into your /etc/rc.local (eg. 'sudo python /home/pi/Raspberr
 - Numbers (1234567890), which will either play a sfx that was specified for that key, or load a new music style if space was pressed beforehand.
 - Plus and Minus, which will turn up and down the volume of the music.
 - Enter, which, if hit twice, will exit the program.
+
+## Other Stuff:
+- Examplemusic by https://www.bensound.com .Check it out!
+- Examplesfx are by yours truly. Use as you wish.
