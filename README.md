@@ -3,7 +3,6 @@ This little python script is my way of turning a Raspberry Pi into a mobile back
 Intended to be used for board- and role playing games. When ran it will start a pygame application and accept user input on an attached keypad. By hitting space followed by a number, you will be able to change the music channel, which will load up individual soundeffects with it. The sfx can then be fired seperately by hitting the numbers loaded up with the sfx.
 
 ## You will need to have installed:
-- wmctrl (this will be used to always shift the pygame window into the foreground)
 - python 2.7.6 (Well, duh)
 - pygame (This won't run otherwise)
 - python keyboard module (https://pypi.org/project/keyboard/ I had version 0.13.1 when coding this)
@@ -40,3 +39,4 @@ Alternatively put it into your /etc/rc.local (eg. 'sudo python /home/pi/Raspberr
 ## Other Stuff:
 - Examplemusic by https://www.bensound.com .Check it out!
 - Examplesfx are by yours truly. Use as you wish.
+- The Examples enclosed are in mp3 format, because it's smaller. But your pi is most likely not fast enough to decode mp3 in an acceptable length of time. So use the "convert_example_files.sh" to convert the files to wav, with avconv installed.
