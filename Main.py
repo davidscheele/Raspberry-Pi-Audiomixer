@@ -55,6 +55,7 @@ def getRandomPlaylistOf(directory):
 def getNextSongFromPlaylist():
 	logging.info('Getting next song from playlist')
 	global currentPlaylist
+	logging.info(currentPlaylist[0])	
 	chosenTitle = currentPlaylist[0]
 	currentPlaylist.remove(currentPlaylist[0])
 	logging.info('Done')
@@ -149,6 +150,7 @@ def checkTheQueue():
 				logging.info('Playist empty, making a new one')
 				currentPlaylist = getRandomPlaylistOf(musicStyleDict[currentMusicStyle])
 			logging.info('Setting a new song')
+			logging.info(currentPlaylist[0])	
 			musicChannelA.queue(pygame.mixer.Sound(currentPlaylist[0]))
 			logging.info('Removing from playlist')
 			currentPlaylist.remove(currentPlaylist[0])
@@ -160,6 +162,7 @@ def checkTheQueue():
 				logging.info('Playlist empty, making new one')
 				currentPlaylist = getRandomPlaylistOf(musicStyleDict[currentMusicStyle])
 			logging.info('Setting a new song')
+			logging.info(currentPlaylist[0])
 			musicChannelB.queue(pygame.mixer.Sound(currentPlaylist[0]))
 			logging.info('Removing from playlist')
 			currentPlaylist.remove(currentPlaylist[0])
