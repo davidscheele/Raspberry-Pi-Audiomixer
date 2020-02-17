@@ -27,8 +27,8 @@ def loadMusicStyles():
 musicStyleDict = loadMusicStyles()
 maxMusicVolume = 0.5
 
-warnSound = home+"/Raspberry-Pi-Audiomixer/warning.wav"
-secondSilence = home+"/Raspberry-Pi-Audiomixer/silence-1-second.wav"
+warnSound = home+"/Raspberry-Pi-Audiomixer/sound/warning.wav"
+secondSilence = home+"/Raspberry-Pi-Audiomixer/sound/silence-1-second.wav"
 
 logging.info('Preinit of mixer')
 pygame.mixer.pre_init(22050, -16, 2, 512)
@@ -240,7 +240,7 @@ def turnMusicDown():
 		logging.info('Volume is already at 100%')
 
 logging.info('Startup Sound')
-pygame.mixer.Sound(home+'/Raspberry-Pi-Audiomixer/startup-sound.wav').play()
+pygame.mixer.Sound(home+'/Raspberry-Pi-Audiomixer/sound/startup-sound.wav').play()
 logging.info('Entering while loop')
 while breaker:
 	checkTheQueue()

@@ -1,0 +1,6 @@
+For conversion to wav use avconv or ffmpeg (it's the same program with different names)
+Easiest syntax is
+ffmpeg -i some_music.mp3 some_music.wav
+
+To convert entire directories and delete the old files:
+for i in *.mp3; do avconv -i "$i" "${i%.*}.wav"; rm -rf "$i"; done
