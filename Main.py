@@ -62,7 +62,7 @@ def getNextSongFromPlaylist():
 	return chosenTitle
 
 def fadeTo(newDirection):
-	logging.info('Fading to a new style')
+	logging.info('Fading to a new style...')
 	global currentPlaylist
 	global currentMusicChannel
 	global musicChannelA
@@ -72,9 +72,9 @@ def fadeTo(newDirection):
 	if currentMusicChannel == "x":
 		currentMusicChannel = "a"
 	
-	logging.info('Loading new Soundeffects')
+	logging.info('Loading new Soundeffects...')
 	loadSoundEffects(musicStyleDict[newDirection])
-	logging.info('Getting new Music')
+	logging.info('Getting new Music...')
 	currentPlaylist = getRandomPlaylistOf(musicStyleDict[newDirection])
 	
 	logging.info('Begin Fading...')
@@ -86,20 +86,20 @@ def fadeTo(newDirection):
 		volb = 0
 		logging.info('Play and pause on B')
 		musicChannelB = pygame.mixer.Sound(getNextSongFromPlaylist()).play()
-		logging.info('Playing the song')
+		logging.info('Playing song on B')
 		musicChannelB.pause()
-		logging.info('paused the song')
-		logging.info('Unpause B')
+		logging.info('Paused song on B')
+		logging.info('Unpause song on B')
 		musicChannelB.unpause()
 		while vola > 0:
-			logging.info('Fading')
+			logging.info('Fading...')
 			vola -= 0.01
 			volb += 0.01
 			logging.info('Setting Volumes')
 			musicChannelA.set_volume(vola)
 			musicChannelB.set_volume(volb)
 			time.sleep(0.03)
-		logging.info('Done with fading')
+		logging.info('Done with fading.')
 		checkTheQueue()
 		musicChannelB.set_volume(maxMusicVolume)
 	else:
@@ -109,28 +109,28 @@ def fadeTo(newDirection):
 		vola = 0
 		logging.info('Play and pause on A')
 		musicChannelA = pygame.mixer.Sound(getNextSongFromPlaylist()).play()
-		logging.info('Playing the song')
+		logging.info('Playing song on A')
 		musicChannelA.pause()
-		logging.info('paused the song')
-		logging.info('Unpause A')
+		logging.info('Paused song on A')
+		logging.info('Unpause song on A')
 		musicChannelA.unpause()
 		while volb > 0:
-			logging.info('Fading')
+			logging.info('Fading...')
 			volb -= 0.01
 			vola += 0.01
 			logging.info('Setting Volumes')
 			musicChannelB.set_volume(volb)
 			musicChannelA.set_volume(vola)
 			time.sleep(0.05)
-		logging.info('Done with fading')
+		logging.info('Done with fading.')
 		checkTheQueue()
 		musicChannelA.set_volume(maxMusicVolume)
-	logging.info('Setting to a new Directory')
+	logging.info('Setting the new directory as the current directory')
 	currentMusicStyle = newDirection
 	logging.info('All done with the fading')
 
 def loadSoundEffects(directory):
-	logging.info('Loading Soundeffects')
+	logging.info('Loading Soundeffects...')
 	global sfxDict
 
 	sfxDict = defaultdict(list)
@@ -185,7 +185,7 @@ def playByKey(key):
 			logging.info('I have nothing for %s', key)
 	else:
 		pygame.mixer.Sound(warnSound).play()
-		logging.info('No music playing yet, no soundeffects for you')
+		logging.info('No music playing yet, no soundeffects for you!')
 		
 def turnMusicUp():
 	logging.info('Turn the Volume up!')
@@ -247,7 +247,7 @@ while breaker:
 	if keyboard.is_pressed('space'):
 		while keyboard.is_pressed('space'):
 			pass
-		logging.info('Space was pressed, waiting for a number to fade to other music')
+		logging.info('Space was pressed, waiting for a number to fade to a new music style...')
 		while True:
 			checkTheQueue()
 			if keyboard.is_pressed('1') and '1' in musicStyleDict:
@@ -373,13 +373,13 @@ while breaker:
 	if keyboard.is_pressed('-'):
 		while keyboard.is_pressed('-'):
 			pass
-		logging.info('Shut up a litte?')
+		logging.info('Shut up a little?')
 		turnMusicDown()
 	if keyboard.is_pressed('enter'):
 		while keyboard.is_pressed('enter'):
 			pass
 		rlybreak = True
-		logging.info('Enter was pressed. Really quit? Press Enter Again to quit')
+		logging.info('Enter was pressed. Really quit? Press Enter again to quit')
 		while rlybreak:
 			if keyboard.is_pressed('enter'):
 				logging.info('We are out then')
