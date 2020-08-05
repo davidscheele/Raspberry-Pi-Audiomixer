@@ -20,13 +20,14 @@ Intended to be used for board- and role playing games. When ran it will start a 
 - Edit the musicstyleorder in the main directory and change according to the instructions inside
 - Change the user on line 5 in the Main.py to the username where the main Folder of the Audiomixer is located
 - Run 'sudo python Main.py'
+-- Alternatively put it into your /etc/rc.local (eg. 'sudo python /home/pi/Raspberry-Pi-Audiomixer/Main.py') so it boots up on startup. You can hear the startup.wav for verification that the program started.
 
-Alternatively put it into your /etc/rc.local (eg. 'sudo python /home/pi/Raspberry-Pi-Audiomixer/Main.py') so it boots up on startup. You can hear the startup.wav for verification that the program started.
+- The Examples enclosed are in mp3 format, because it's smaller. But your pi is most likely not fast enough to decode mp3 in an acceptable length of time (mine sure wasn't). So use the "convert_example_files.sh" to convert the files to wav, with avconv installed.
 
 ## Useage:
 - After Startup you will hear a startup sound. Afterwards try pressing numeral buttons (1-0). An error sound should play, because no music style has been loaded yet.
 - Press space followed by the number of music style you want to switch to, determined in the musicstyleorder file.
-- Script should switch to the music style and start playing a random piece of music from that style.
+-- The script should switch to the music style and start playing a random piece of music from that style.
 - Now press numeral buttons to which you mapped soundeffects. A random one will play if you mapped more than one to a single numeral.
 - Hit Enter twice to abort script. 
 
@@ -39,4 +40,3 @@ Alternatively put it into your /etc/rc.local (eg. 'sudo python /home/pi/Raspberr
 ## Other Stuff:
 - Examplemusic by https://www.bensound.com .Check it out!
 - Examplesfx are by yours truly. Use as you wish.
-- The Examples enclosed are in mp3 format, because it's smaller. But your pi is most likely not fast enough to decode mp3 in an acceptable length of time. So use the "convert_example_files.sh" to convert the files to wav, with avconv installed.
