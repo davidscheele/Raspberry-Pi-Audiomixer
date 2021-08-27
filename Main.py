@@ -27,7 +27,7 @@ currentmusicstyle = "0"
 
 #The following sets up the music channels.
 logging.info('Initializing mixer...')
-pygame.mixer.pre_init(22050, -16, 2, 512)
+pygame.mixer.pre_init(22050, -16, 2, 1024)
 pygame.mixer.init()
 warnsound = pygame.mixer.Sound(home+"/Raspberry-Pi-Audiomixer/sound/warning.wav")
 secondsilence = pygame.mixer.Sound(home+"/Raspberry-Pi-Audiomixer/sound/silence-1-second.wav")
