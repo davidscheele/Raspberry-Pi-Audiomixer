@@ -97,7 +97,6 @@ def fadeTo(newdirection):
 		logging.info('Done with fading')
 		MusicChannelB.set_volume(maxmusicvolume)
 		MusicChannelA.set_volume(0)
-		checkTheQueue()
 	else:
 		logging.info('Fading from B to A')
 		currentmusicchannel = "a"
@@ -115,10 +114,10 @@ def fadeTo(newdirection):
 		logging.info('Done with fading')
 		MusicChannelA.set_volume(maxmusicvolume)
 		MusicChannelB.set_volume(0)
-		checkTheQueue()
 	logging.info('Setting to a new directory')
 	currentmusicstyle = newdirection
 	logging.info('All done with the fading')
+	checkTheQueue()
 
 def loadSoundEffects(directory):
 	#Loads new soundeffects into the public sfx dictionary
